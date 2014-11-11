@@ -36,7 +36,7 @@ func main() {
 	url := args[0]
 	api, err := goprismic.Get(url, *accessToken, goprismic.DefaultConfig)
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling %s: %v\n", url, err.Error())
+		fmt.Fprintf(os.Stderr, "Error when calling %v: %v\n", url, err.Error())
 		os.Exit(2)
 	}
 	if display("releases") {
@@ -48,7 +48,7 @@ func main() {
 			}
 			var label string
 			if ref.Label != "" {
-				label = fmt.Sprintf(" “%s”", ref.Label)
+				label = fmt.Sprintf(" “%v”", ref.Label)
 			}
 			var scheduledAt string
 			if ref.ScheduledAt != 0 {
@@ -58,13 +58,13 @@ func main() {
 				}
 				scheduledAt = fmt.Sprintf(" <%v>", date)
 			}
-			fmt.Printf("- release (id=%v ref=%v)%s%s%s\n", ref.Id, ref.Ref, scheduledAt, flag, label)
+			fmt.Printf("- release (id=%v ref=%v)%v%v%v\n", ref.Id, ref.Ref, scheduledAt, flag, label)
 		}
 	}
 	if display("bookmarks") {
 		fmt.Println("Bookmarks:")
 		for name, ref := range api.Data.Bookmarks {
-			fmt.Printf("- bookmark (ref=%v) %s\n", ref, name)
+			fmt.Printf("- bookmark (ref=%v) %v\n", ref, name)
 		}
 	}
 }
