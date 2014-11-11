@@ -4,14 +4,28 @@ import (
 	"flag"
 	"fmt"
 	"os"
+	"strings"
 
 	"github.com/dohzya/goprismic"
 )
 
 func main() {
 	accessToken := flag.String("token", "", "The access token")
+	only := flag.String("only", "all", "The infos to display (releases,bookmarks)")
 	utc := flag.Bool("utc", false, "Display dates in UTC")
 	flag.Parse()
+
+	var display func(string) bool
+	if *only == "all" {
+		display = func(_ string) bool { return true }
+	} else {
+		fieldNames := strings.Split(*only, ",")
+		fields := make(map[string]bool, len(fieldNames))
+		for _, field := range fieldNames {
+			fields[field] = true
+		}
+		display = func(field string) bool { return fields[field] }
+	}
 
 	args := flag.Args()
 	if len(args) == 0 {
@@ -25,28 +39,32 @@ func main() {
 		fmt.Fprintf(os.Stderr, "Error when calling %s: %v\n", url, err.Error())
 		os.Exit(2)
 	}
-	fmt.Println("Releases:")
-	for _, ref := range api.Data.Refs {
-		var flag string
-		if ref.IsMasterRef {
-			flag = " {master}"
-		}
-		var label string
-		if ref.Label != "" {
-			label = fmt.Sprintf(" “%s”", ref.Label)
-		}
-		var scheduledAt string
-		if ref.ScheduledAt != 0 {
-			date := *ref.ScheduledTime()
-			if *utc {
-				date = date.UTC()
+	if display("releases") {
+		fmt.Println("Releases:")
+		for _, ref := range api.Data.Refs {
+			var flag string
+			if ref.IsMasterRef {
+				flag = " {master}"
 			}
-			scheduledAt = fmt.Sprintf(" <%v>", date)
+			var label string
+			if ref.Label != "" {
+				label = fmt.Sprintf(" “%s”", ref.Label)
+			}
+			var scheduledAt string
+			if ref.ScheduledAt != 0 {
+				date := *ref.ScheduledTime()
+				if *utc {
+					date = date.UTC()
+				}
+				scheduledAt = fmt.Sprintf(" <%v>", date)
+			}
+			fmt.Printf("- release (id=%v ref=%v)%s%s%s\n", ref.Id, ref.Ref, scheduledAt, flag, label)
 		}
-		fmt.Printf("- release (id=%v ref=%v)%s%s%s\n", ref.Id, ref.Ref, scheduledAt, flag, label)
 	}
-	fmt.Println("Bookmarks:")
-	for name, ref := range api.Data.Bookmarks {
-		fmt.Printf("- bookmark (ref=%v) %s\n", ref, name)
+	if display("bookmarks") {
+		fmt.Println("Bookmarks:")
+		for name, ref := range api.Data.Bookmarks {
+			fmt.Printf("- bookmark (ref=%v) %s\n", ref, name)
+		}
 	}
 }
