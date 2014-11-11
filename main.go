@@ -10,6 +10,7 @@ import (
 
 func main() {
 	accessToken := flag.String("token", "", "The access token")
+	utc := flag.Bool("utc", false, "Display dates in UTC")
 	flag.Parse()
 
 	args := flag.Args()
@@ -34,6 +35,14 @@ func main() {
 		if ref.Label != "" {
 			label = fmt.Sprintf(" “%s”", ref.Label)
 		}
-		fmt.Printf("- (id=%v ref=%v)%s%s\n", ref.Id, ref.Ref, flag, label)
+		var scheduledAt string
+		if ref.ScheduledAt != 0 {
+			date := *ref.ScheduledTime()
+			if *utc {
+				date = date.UTC()
+			}
+			scheduledAt = fmt.Sprintf(" <%v>", date)
+		}
+		fmt.Printf("- (id=%v ref=%v)%s%s%s\n", ref.Id, ref.Ref, scheduledAt, flag, label)
 	}
 }
