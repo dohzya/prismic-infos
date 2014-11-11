@@ -67,4 +67,10 @@ func main() {
 			fmt.Printf("- bookmark (ref=%v) %v\n", ref, name)
 		}
 	}
+	if display("types") {
+		fmt.Println("Types:")
+		for id, name := range api.Data.Types {
+			fmt.Printf("- type (id=%v) %v\n", id, name)
+		}
+	}
 }
