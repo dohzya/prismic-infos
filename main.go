@@ -25,11 +25,11 @@ func main() {
 		fmt.Fprintf(os.Stderr, "Error when calling %s: %v\n", url, err.Error())
 		os.Exit(2)
 	}
-	refs := api.Data.Refs
-	for _, ref := range refs {
+	fmt.Println("Releases:")
+	for _, ref := range api.Data.Refs {
 		var flag string
 		if ref.IsMasterRef {
-			flag = " [master]"
+			flag = " {master}"
 		}
 		var label string
 		if ref.Label != "" {
@@ -43,6 +43,6 @@ func main() {
 			}
 			scheduledAt = fmt.Sprintf(" <%v>", date)
 		}
-		fmt.Printf("- (id=%v ref=%v)%s%s%s\n", ref.Id, ref.Ref, scheduledAt, flag, label)
+		fmt.Printf("- release (id=%v ref=%v)%s%s%s\n", ref.Id, ref.Ref, scheduledAt, flag, label)
 	}
 }
