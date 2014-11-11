@@ -64,13 +64,13 @@ func main() {
 	if display("bookmarks") {
 		fmt.Println("Bookmarks:")
 		for name, ref := range api.Data.Bookmarks {
-			fmt.Printf("- bookmark (ref=%v) %v\n", ref, name)
+			fmt.Printf("- bookmark (ref=%v) “%v”\n", ref, name)
 		}
 	}
 	if display("types") {
 		fmt.Println("Types:")
 		for id, name := range api.Data.Types {
-			fmt.Printf("- type (id=%v) %v\n", id, name)
+			fmt.Printf("- type (id=%v) “%v”\n", id, name)
 		}
 	}
 	if display("tags") {
