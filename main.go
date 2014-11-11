@@ -11,7 +11,7 @@ import (
 
 func main() {
 	accessToken := flag.String("token", "", "The access token")
-	only := flag.String("only", "all", "The infos to display (releases,bookmarks)")
+	only := flag.String("only", "all", "The infos to display (releases,forms,bookmarks,types,tags)")
 	utc := flag.Bool("utc", false, "Display dates in UTC")
 	flag.Parse()
 
