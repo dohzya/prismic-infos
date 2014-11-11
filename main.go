@@ -73,4 +73,8 @@ func main() {
 			fmt.Printf("- type (id=%v) %v\n", id, name)
 		}
 	}
+	if display("tags") {
+		tags := strings.Join(api.Data.Tags, ", ")
+		fmt.Printf("Tags: %v\n", tags)
+	}
 }
