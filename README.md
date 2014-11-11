@@ -8,8 +8,10 @@ Install
 
 To install, get the SoCloz's golang prismic.io's kit, then get this app :-)
 
+**Note**: this application uses some features that are not (yet) present in the [SoCloz's goprismic library](https://github.com/SoCloz/goprismic), so until they merge my [pull-request](https://github.com/SoCloz/goprismic/pull/2) please use [my fork](https://github.com/dohzya/goprismic) :-)
+
 ```bash
-go get github.com/SoCloz/goprismic
+go get github.com/dohzya/goprismic
 go get github.com/dohzya/prismic-infos
 ```
 

@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/SoCloz/goprismic"
+	"github.com/dohzya/goprismic"
 )
 
 func main() {
