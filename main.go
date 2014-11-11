@@ -6,7 +6,7 @@ import (
 	"os"
 	"strings"
 
-	"github.com/dohzya/goprismic"
+	"github.com/SoCloz/goprismic"
 )
 
 func main() {
