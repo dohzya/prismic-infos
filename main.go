@@ -61,6 +61,16 @@ func main() {
 			fmt.Printf("- release (id=%v ref=%v)%v%v%v\n", ref.Id, ref.Ref, scheduledAt, flag, label)
 		}
 	}
+	if display("forms") {
+		fmt.Println("Forms:")
+		for id, form := range api.Data.Forms {
+			var name string
+			if form.Name != "" {
+				name = fmt.Sprintf(" “%v”", form.Name)
+			}
+			fmt.Printf("- form (id=%v)%v\n", id, name)
+		}
+	}
 	if display("bookmarks") {
 		fmt.Println("Bookmarks:")
 		for name, ref := range api.Data.Bookmarks {
