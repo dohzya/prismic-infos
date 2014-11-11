@@ -45,4 +45,8 @@ func main() {
 		}
 		fmt.Printf("- release (id=%v ref=%v)%s%s%s\n", ref.Id, ref.Ref, scheduledAt, flag, label)
 	}
+	fmt.Println("Bookmarks:")
+	for name, ref := range api.Data.Bookmarks {
+		fmt.Printf("- bookmark (ref=%v) %s\n", ref, name)
+	}
 }
